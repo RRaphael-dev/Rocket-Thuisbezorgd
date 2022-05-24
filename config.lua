@@ -36,7 +36,6 @@ Rocket.VoertuigVerwijder = {
 
 Rocket.DrawTextKleur = '~p~'
 
-Rocket.license = 'f5ghj4jGGHFLF485252F4HGDD42DDF3Dfgg33fg3341ffg452ddf5hjjk5jl533'
 
 Rocket.Loc = {
 [1] = { x = 269.54156494141, y = -1713.0290527344, z = 29.668798446655 },

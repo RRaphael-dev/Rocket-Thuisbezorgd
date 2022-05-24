@@ -90,10 +90,10 @@ Citizen.CreateThread(function()
             else
                 Citizen.Wait(1000)
                 end
-            if takeDist <= 2 and IsPedInVehicle(PlayerPedId(), kankerautoneef, false) then
+            if takeDist <= 2 and IsPedInVehicle(PlayerPedId(), werkauto, false) then
                 DrawText3Ds(Rocket.VoertuigVerwijder.x, Rocket.VoertuigVerwijder.y, Rocket.VoertuigVerwijder.z, Rocket.DrawTextKleur ..'E~w~ - Auto Verwijderen!')
             if IsControlJustPressed(0, 38) then
-                ESX.Game.DeleteVehicle(kankerautoneef)
+                ESX.Game.DeleteVehicle(werkauto)
                 autoweggezet = true
                 end
             end
@@ -113,20 +113,20 @@ RegisterCommand('endbezorgerrun', function(source, args, RawCommand)
         end
 end)
 
-BeginRun = function(niga1, niga2)
+BeginRun = function(func1, func2)
         Citizen.CreateThread(function()
             while true do
                 Citizen.Wait(0)
-                if huidigehuis ~= tonumber(niga2) + 1 then
+                if huidigehuis ~= tonumber(func2) + 1 then
                     local coords = GetEntityCoords(PlayerPedId())
                     local dist = GetDistanceBetweenCoords(coords, Rocket.Loc[huidigehuis].x, Rocket.Loc[huidigehuis].y, Rocket.Loc[huidigehuis].z)
                     if dist < 11 then
                         DrawMarker(2, Rocket.Loc[huidigehuis].x,Rocket.Loc[huidigehuis].y, Rocket.Loc[huidigehuis].z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.3, 0.3, 0.2, Rocket.Marker.r, Rocket.Marker.g, Rocket.Marker.b, 100, false, true, 2, true, false, false, false)
                     if dist < 3 then 
-                        DrawText3Ds(Rocket.Loc[huidigehuis].x,Rocket.Loc[huidigehuis].y, Rocket.Loc[huidigehuis].z, Rocket.DrawTextKleur ..'E~w~ - '.. niga1 .. ' leveren!')
+                        DrawText3Ds(Rocket.Loc[huidigehuis].x,Rocket.Loc[huidigehuis].y, Rocket.Loc[huidigehuis].z, Rocket.DrawTextKleur ..'E~w~ - '.. func1 .. ' leveren!')
                         DrawMarker(2, Rocket.Loc[huidigehuis].x,Rocket.Loc[huidigehuis].y, Rocket.Loc[huidigehuis].z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.3, 0.3, 0.2, Rocket.Marker.r, Rocket.Marker.g, Rocket.Marker.b, 100, false, true, 2, true, false, false, false)
                             if IsControlJustReleased(0, Keys["E"]) then
-                                Progressbar("leve", niga1.. " Afleveren..", 10000, false, true, {
+                                Progressbar("leve", func1.. " Afleveren..", 10000, false, true, {
                                     disableMovement = true,
                                     disableControls = true,
                                     disableCarMovement = true,
@@ -140,8 +140,8 @@ BeginRun = function(niga1, niga2)
                                     huidigehuis = huidigehuis + 1
                                     ClearPedTasks(PlayerPedId())
                                     CreateJobBlip()
-                                    local kanker = 45245657554684542516546745469849786463
-                                    TriggerServerEvent("rocket-Thuisbezorgd:server:pankie", kanker)
+                                    local verify = 45245657554684542516546745469849786463
+                                    TriggerServerEvent("rocket-Thuisbezorgd:server:pankie", verify)
                                 end, function() 
                                     ESX.ShowNotification('~m~Geannuleerd')
                                 end)
@@ -166,15 +166,12 @@ SpawnAuto = function()
         SetVehicleColours(veh, 1, 1)
         SetVehicleNumberPlateText(veh, "Thuisbezorgd")
         TaskWarpPedIntoVehicle(playerPed, veh, -1)
-        kankerautoneef = veh
+        werkauto = veh
     end)
 end
 
 
 
-function close()
-    Menu.hidden = true
-end
 
 Progressbar = function(name, label, duration, useWhileDead, canCancel, disableControls, animation, prop, propTwo, onFinish, onCancel)
     exports['progressbar']:Progress({
